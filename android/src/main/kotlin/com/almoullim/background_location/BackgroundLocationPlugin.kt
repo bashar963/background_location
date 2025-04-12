@@ -4,29 +4,17 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugin.common.PluginRegistry
 
 class BackgroundLocationPlugin : FlutterPlugin, ActivityAware {
 
     companion object {
-
-        /**
-        Legacy for v1 embedding
-         */
-        @SuppressWarnings("deprecation")
-        fun registerWith(registrar: PluginRegistry.Registrar) {
-            val service = BackgroundLocationService.getInstance()
-            service.onAttachedToEngine(registrar.context(), registrar.messenger())
-            registrar.addRequestPermissionsResultListener(service)
-        }
-
         const val TAG = "com.almoullim.Log.Tag"
         const val PLUGIN_ID = "com.almoullim.background_location"
     }
 
-
     override fun onAttachedToEngine(binding: FlutterPluginBinding) {
-        BackgroundLocationService.getInstance().onAttachedToEngine(binding.applicationContext, binding.binaryMessenger)
+        BackgroundLocationService.getInstance()
+            .onAttachedToEngine(binding.applicationContext, binding.binaryMessenger)
     }
 
     override fun onDetachedFromEngine(binding: FlutterPluginBinding) {
@@ -50,5 +38,4 @@ class BackgroundLocationPlugin : FlutterPlugin, ActivityAware {
     override fun onDetachedFromActivity() {
         BackgroundLocationService.getInstance().setActivity(null)
     }
-
 }
